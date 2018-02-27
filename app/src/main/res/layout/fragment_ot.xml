@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.develop.vsdev.GoogleSignInActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/background_gradient"></RelativeLayout>
+
+    <android.support.v7.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+
+
+        android:layout_gravity="center"
+        android:layout_marginTop="200dp"
+        android:elevation="8dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        app:cardPreventCornerOverlap="false"
+        card_view:cardUseCompatPadding="true"
+        card_view:contentPadding="10dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <Button
+                android:id="@+id/ResendButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="33dp"
+                android:background="@drawable/circularbutton"
+                android:gravity="center"
+                android:text="Resend"
+                android:textColor="@color/white"
+                android:visibility="invisible"/>
+
+           <com.develop.vsdev.Utils.OtpView
+               android:id="@+id/otp_view"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:inputType="number"
+               android:textColor="@color/material_blue"
+              android:layout_marginTop="50dp" >
+               <requestFocus/>
+               </com.develop.vsdev.Utils.OtpView>
+
+            <TextView
+                android:id="@+id/Resend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="14dp"
+                android:layout_marginStart="14dp"
+                android:text="Resend in"
+                android:textColor="@color/material_blue"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/Resend"
+                android:layout_marginLeft="21dp"
+                android:layout_marginStart="21dp"
+                android:layout_toEndOf="@+id/Resend"
+                android:layout_toRightOf="@+id/Resend"
+                android:textColor="@color/material_blue"
+                android:textStyle="bold"
+                android:text="" />
+
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+
+
+</RelativeLayout>
