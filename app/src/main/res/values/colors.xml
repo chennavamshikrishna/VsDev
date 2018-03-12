@@ -9,6 +9,9 @@
     <color name="material_blue">#01579B</color>
     <color name="status">#0288d1</color>
     <color name="background">#f5f5f5</color>
+    <color name="red">#F44336</color>
+    <color name="blue">#2196F3</color>
+
 
 
 </resources>

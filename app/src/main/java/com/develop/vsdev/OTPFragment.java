@@ -146,7 +146,7 @@ public class OTPFragment extends Fragment {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     Log.i(TAG, "onComplete: ");
                     if (task.isSuccessful()) {
-                        Intent otpintent=new Intent(getActivity(), InfoActivity.class);
+                        Intent otpintent=new Intent(getActivity(), LocationstarterActivity.class);
                         otpintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(otpintent);
                     } else {

@@ -1,10 +1,17 @@
 package com.develop.vsdev;
 
+import android.app.ActionBar;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +39,32 @@ public class InfoActivity extends AppCompatActivity {
 
 
         }
+        final ViewGroup actionBarLayout = (ViewGroup) getLayoutInflater().inflate(R.layout.actionbar_layout, null);
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setCustomView(actionBarLayout);
+        final TextView actionBarTitle = (TextView) findViewById(R.id.action_bar_title);
+        ImageView img=findViewById(R.id.down_arrow);
+        actionBarTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(InfoActivity.this,LocationstarterActivity.class));
+            }
+
+        });
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(InfoActivity.this,LocationstarterActivity.class));
+
+            }
+        });
+
         recyclerView =findViewById(R.id.recylerview);
-       GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2);
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2);
 
 
         recyclerView.setLayoutManager(gridLayoutManager);
