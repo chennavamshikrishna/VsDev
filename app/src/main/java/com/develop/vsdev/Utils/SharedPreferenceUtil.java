@@ -71,4 +71,13 @@ public class SharedPreferenceUtil {
         return sharedPreferences.getBoolean(Constants.ONBOARDING_DONE, false);
     }
 
+    public void setCity(String city) {
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString(Constants.CITY,city);
+        editor.apply();
+    }
+    public  String getCity(){
+            return  sharedPreferences.getString(Constants.CITY,"null");
+    }
+
 }

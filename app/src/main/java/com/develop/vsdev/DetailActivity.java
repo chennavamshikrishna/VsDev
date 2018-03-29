@@ -27,7 +27,6 @@ public class DetailActivity extends AppCompatActivity {
              d.setSaleimage(images[i]);
              d.setSalename(location[i]);
              avail.add(d);
-             Log.d("length is","ram"+avail.size());
 
 
          }

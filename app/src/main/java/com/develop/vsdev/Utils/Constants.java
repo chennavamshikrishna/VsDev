@@ -7,4 +7,5 @@ public class Constants {
     public static final String DISPLAY_NAME = "displayName";
     public static final String PROFILE_PIC = "profilePic";
     public static final String ONBOARDING_DONE = "onBoardingDone";
+    public static final String CITY="city";
 }

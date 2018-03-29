@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.develop.vsdev.Utils.SharedPreferenceUtil;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.common.ConnectionResult;
@@ -36,6 +37,7 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.model.LatLng;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.io.IOException;
 import java.util.List;
@@ -52,6 +54,7 @@ public class LocationstarterActivity extends AppCompatActivity implements Google
     private static int UPDATE_INTERVAL = 5000; // SEC
     private static int FATEST_INTERVAL = 3000; // SEC
     private static int DISPLACEMENT = 10; // METERS
+    SharedPreferenceUtil sharedPreferenceUtil;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -74,6 +77,7 @@ public class LocationstarterActivity extends AppCompatActivity implements Google
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locationstarter);
+        sharedPreferenceUtil=SharedPreferenceUtil.getInstance(getApplicationContext());
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             //Run-time request permission
@@ -113,6 +117,7 @@ public class LocationstarterActivity extends AppCompatActivity implements Google
                     public void onTargetClick(TapTargetView view) {
                         super.onTargetClick(view);
                         tooglePeriodicLoctionUpdates();
+
 
 
                     }
@@ -188,7 +193,12 @@ public class LocationstarterActivity extends AppCompatActivity implements Google
         String country = addresses.get(0).getCountryName();
         String postalCode = addresses.get(0).getPostalCode();
         String knownName = addresses.get(0).getFeatureName();
-        Log.d("city is",address+" "+city+" "+state);// Only if available else return NULL
+        String loc[]=address.split(",");
+        Log.d("city is",loc[4]);
+        sharedPreferenceUtil.setCity(loc[4]+","+city);
+        Intent i=new Intent(LocationstarterActivity.this, InfoActivity.class);
+        startActivity(i);
+
 
     }
 
