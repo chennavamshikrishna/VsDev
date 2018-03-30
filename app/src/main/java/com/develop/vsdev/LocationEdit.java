@@ -5,24 +5,25 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.graphics.Rect;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.develop.vsdev.Utils.SharedPreferenceUtil;
-import com.getkeepsafe.taptargetview.TapTarget;
-import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -36,15 +37,18 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.android.gms.maps.model.LatLng;
-import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class LocationstarterActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
+public class LocationEdit extends AppCompatActivity  implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
+
+    SharedPreferenceUtil sharedPreferenceUtil;
+    ImageView loc;
+    TextView locstatus;
+     TextView actionBarTitle;
     private static final int MY_PERMISSION_REQUEST_CODE = 7171;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 7172;
     private boolean mRequestingLocationUpdates = false;
@@ -54,7 +58,7 @@ public class LocationstarterActivity extends AppCompatActivity implements Google
     private static int UPDATE_INTERVAL = 5000; // SEC
     private static int FATEST_INTERVAL = 3000; // SEC
     private static int DISPLACEMENT = 10; // METERS
-    SharedPreferenceUtil sharedPreferenceUtil;
+    Animation animation;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -68,22 +72,34 @@ public class LocationstarterActivity extends AppCompatActivity implements Google
                 break;
         }
     }
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_locationstarter);
+        setContentView(R.layout.activity_location_edit);
         sharedPreferenceUtil=SharedPreferenceUtil.getInstance(getApplicationContext());
+        final ViewGroup actionBarLayout = (ViewGroup) getLayoutInflater().inflate(R.layout.actionbar_layout, null);
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setCustomView(actionBarLayout);
+        actionBarTitle = (TextView) findViewById(R.id.action_bar_title);
+        actionBarTitle.setText(sharedPreferenceUtil.getCity());
+        ImageView img=findViewById(R.id.down_arrow);
+        img.setVisibility(View.GONE);
+        loc=findViewById(R.id.locationblink);
+        locstatus=findViewById(R.id.locationstatus);
+         animation = new AlphaAnimation(1, 0);
+        animation.setDuration(500);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setRepeatMode(Animation.REVERSE);
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             //Run-time request permission
             ActivityCompat.requestPermissions(this, new String[]{
                     android.Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION
             }, MY_PERMISSION_REQUEST_CODE);
         } else {
             if (checkPlayServices()) {
@@ -91,40 +107,15 @@ public class LocationstarterActivity extends AppCompatActivity implements Google
                 createLocationRequest();
             }
         }
-
-        final Drawable droid = ContextCompat.getDrawable(this, R.drawable.ic_location_on_black_24dp);
-        TapTargetView.showFor(this,                 // `this` is an Activity
-                TapTarget.forView(findViewById(R.id.locationstarter), "Enable Location", "We have the best offers near by, believe me")
-                        // All options below are optional
-                        .outerCircleColor(R.color.material_blue)      // Specify a color for the outer circle
-                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
-                        .targetCircleColor(R.color.white)   // Specify a color for the target circle
-                        .titleTextSize(30)                  // Specify the size (in sp) of the title text
-                        .titleTextColor(R.color.white)      // Specify the color of the title text
-                        .descriptionTextSize(20)            // Specify the size (in sp) of the description text
-                        .descriptionTextColor(R.color.material_blue)  // Specify the color of the description text
-                        .textColor(R.color.blue)            // Specify a color for both the title and description text
-                        .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
-                        .dimColor(R.color.status)            // If set, will dim behind the view with 30% opacity of the given color
-                        .drawShadow(true)                   // Whether to draw a drop shadow or not
-                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
-                        .tintTarget(true)                   // Whether to tint the target view's color
-                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
-                        .targetRadius(60)// Specify the target radius (in dp)
-                        .icon(droid),
-                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
-                    @Override
-                    public void onTargetClick(TapTargetView view) {
-                        super.onTargetClick(view);
-                        tooglePeriodicLoctionUpdates();
-
-
-
-                    }
-                });
+        loc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tooglePeriodicLoctionUpdates();
+                loc.startAnimation(animation);
+            }
+        });
 
     }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -162,8 +153,8 @@ public class LocationstarterActivity extends AppCompatActivity implements Google
 
     private void displayLocation() {
         Log.d("display location called",":)");
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
@@ -194,10 +185,10 @@ public class LocationstarterActivity extends AppCompatActivity implements Google
         String postalCode = addresses.get(0).getPostalCode();
         String knownName = addresses.get(0).getFeatureName();
         String loc[]=address.split(",");
-        //Log.d("city is",loc[4]);
+        animation.cancel();
         sharedPreferenceUtil.setCity(city);
-        Intent i=new Intent(LocationstarterActivity.this, InfoActivity.class);
-        startActivity(i);
+        locstatus.setText(sharedPreferenceUtil.getCity());
+        actionBarTitle.setText(sharedPreferenceUtil.getCity());
 
 
     }
@@ -236,7 +227,7 @@ public class LocationstarterActivity extends AppCompatActivity implements Google
                             // Show the dialog by calling startResolutionForResult(),
                             // and check the result in onActivityResult().
                             status.startResolutionForResult(
-                                    LocationstarterActivity.this, 1000);
+                                    LocationEdit.this, 1000);
                         } catch (IntentSender.SendIntentException e) {
                             // Ignore the error.
                         }
@@ -282,7 +273,7 @@ public class LocationstarterActivity extends AppCompatActivity implements Google
         Log.d("4","startlocation updates called");
 
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
@@ -316,6 +307,4 @@ public class LocationstarterActivity extends AppCompatActivity implements Google
         displayLocation();
     }
 
-    }
-
-
+}

@@ -2,6 +2,7 @@ package com.develop.vsdev;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.icu.text.IDNA;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -26,6 +27,7 @@ public class InfoActivity extends AppCompatActivity {
     List<Infoclass>list;
     RecyclerView recyclerView;
     SharedPreferenceUtil sharedPreferenceUtil;
+    TextView actionBarTitle;
 
 
     @Override
@@ -48,21 +50,11 @@ public class InfoActivity extends AppCompatActivity {
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setCustomView(actionBarLayout);
-        final TextView actionBarTitle = (TextView) findViewById(R.id.action_bar_title);
+          actionBarTitle = (TextView) findViewById(R.id.action_bar_title);
         actionBarTitle.setText(sharedPreferenceUtil.getCity());
         ImageView img=findViewById(R.id.down_arrow);
-        actionBarTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
+        img.setVisibility(View.GONE);
 
-        });
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         recyclerView =findViewById(R.id.recylerview);
 
@@ -84,5 +76,11 @@ public class InfoActivity extends AppCompatActivity {
         moveTaskToBack(true);
 
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        actionBarTitle.setText(sharedPreferenceUtil.getCity());
     }
 }

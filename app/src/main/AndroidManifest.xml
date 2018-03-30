@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.develop.vsdev">
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -30,13 +31,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".InfoActivity" />
+        <activity android:name=".DetailActivity" />
         <activity
-            android:name=".DetailActivity"
-            android:parentActivityName=".InfoActivity" />
-        <activity android:name=".LocationstarterActivity"
-            android:theme="@style/MarkitTheme">
-
-        </activity>
+            android:name=".LocationstarterActivity"
+            android:theme="@style/MarkitTheme"></activity>
+        <activity android:name=".LocationEdit"></activity>
     </application>
 
 </manifest>
