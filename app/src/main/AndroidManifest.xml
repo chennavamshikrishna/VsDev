@@ -31,11 +31,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".InfoActivity" />
-        <activity android:name=".DetailActivity" />
+        <activity android:name=".DetailActivity"
+            android:parentActivityName=".InfoActivity"/>
         <activity
             android:name=".LocationstarterActivity"
             android:theme="@style/MarkitTheme"></activity>
-        <activity android:name=".LocationEdit"></activity>
+        <activity android:name=".LocationEdit"
+            android:parentActivityName=".DetailActivity"></activity>
     </application>
 
 </manifest>

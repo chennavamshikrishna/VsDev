@@ -1,20 +1,9 @@
 package com.develop.vsdev;
 
-import android.app.ActionBar;
-import android.content.Intent;
-import android.icu.text.IDNA;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.develop.vsdev.Utils.SharedPreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +15,6 @@ public class InfoActivity extends AppCompatActivity {
     private String [] names={"Land Sales","Land Lease","House Rent","Bachelor Rent","office space","Commercial space"};
     List<Infoclass>list;
     RecyclerView recyclerView;
-    SharedPreferenceUtil sharedPreferenceUtil;
-    TextView actionBarTitle;
 
 
     @Override
@@ -43,17 +30,7 @@ public class InfoActivity extends AppCompatActivity {
 
 
         }
-        sharedPreferenceUtil=SharedPreferenceUtil.getInstance(getApplicationContext());
-        final ViewGroup actionBarLayout = (ViewGroup) getLayoutInflater().inflate(R.layout.actionbar_layout, null);
-        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setCustomView(actionBarLayout);
-          actionBarTitle = (TextView) findViewById(R.id.action_bar_title);
-        actionBarTitle.setText(sharedPreferenceUtil.getCity());
-        ImageView img=findViewById(R.id.down_arrow);
-        img.setVisibility(View.GONE);
+
 
 
         recyclerView =findViewById(R.id.recylerview);
@@ -78,9 +55,5 @@ public class InfoActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        actionBarTitle.setText(sharedPreferenceUtil.getCity());
-    }
+
 }

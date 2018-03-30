@@ -53,6 +53,7 @@ public class DetailActivity extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setCustomView(actionBarLayout);
           actionBarTitle = (TextView) findViewById(R.id.action_bar_title);
+
         actionBarTitle.setText(sharedPreferenceUtil.getCity());
         ImageView img=findViewById(R.id.down_arrow);
         actionBarTitle.setOnClickListener(new View.OnClickListener() {

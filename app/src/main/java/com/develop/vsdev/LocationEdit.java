@@ -1,18 +1,16 @@
 package com.develop.vsdev;
 
-import android.*;
 import android.Manifest;
-import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +44,7 @@ public class LocationEdit extends AppCompatActivity  implements GoogleApiClient.
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     SharedPreferenceUtil sharedPreferenceUtil;
-    ImageView loc;
+    ImageView loc,edit;
     TextView locstatus;
      TextView actionBarTitle;
     private static final int MY_PERMISSION_REQUEST_CODE = 7171;
@@ -83,6 +81,8 @@ public class LocationEdit extends AppCompatActivity  implements GoogleApiClient.
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setCustomView(actionBarLayout);
+        edit=findViewById(R.id.edit);
+        edit.setVisibility(View.VISIBLE);
         actionBarTitle = (TextView) findViewById(R.id.action_bar_title);
         actionBarTitle.setText(sharedPreferenceUtil.getCity());
         ImageView img=findViewById(R.id.down_arrow);
@@ -112,6 +112,12 @@ public class LocationEdit extends AppCompatActivity  implements GoogleApiClient.
             public void onClick(View v) {
                 tooglePeriodicLoctionUpdates();
                 loc.startAnimation(animation);
+            }
+        });
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
