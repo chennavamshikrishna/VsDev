@@ -1,0 +1,81 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.develop.vsdev.CameraFragment"
+    android:background="@color/black">
+<FrameLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/frame">
+    <SurfaceView
+        android:id="@+id/camera_preview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+
+        />
+    <ImageView
+        android:id="@+id/capture"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/camera"/>
+
+
+
+</FrameLayout>
+
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="61dp" />
+
+    <TextView
+        android:id="@+id/ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="22dp"
+        android:layout_marginEnd="85dp"
+        android:layout_marginRight="85dp"
+        android:text="ok"
+        android:textSize="35dp"
+        android:textColor="@color/white"
+        android:visibility="gone"
+
+        />
+
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/ok"
+        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
+        android:text="cancel"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:visibility="gone"/>
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="72dp"
+        android:layout_below="@+id/frame"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="403dp"
+        android:visibility="gone"
+        />
+
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package com.develop.vsdev;
+package com.develop.vsdev.Utils;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatImageView;

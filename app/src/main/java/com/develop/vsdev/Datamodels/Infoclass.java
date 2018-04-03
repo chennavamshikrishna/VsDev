@@ -1,4 +1,4 @@
-package com.develop.vsdev;
+package com.develop.vsdev.Datamodels;
 
 /**
  * Created by vamshi on 26/2/18.
